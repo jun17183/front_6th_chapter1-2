@@ -1,8 +1,12 @@
 // 전역 저장소들
 const eventStore = new WeakMap();
-const registeredEvents = new Set();
+const registeredRoots = new WeakSet();
 
 export function setupEventListeners(root) {
+  // 이미 등록된 루트면 종료
+  if (registeredRoots.has(root)) return;
+  registeredRoots.add(root);
+
   const eventTypes = [
     'click',
     'input', 
@@ -19,11 +23,6 @@ export function setupEventListeners(root) {
   ];
   
   eventTypes.forEach(eventType => {
-    // 중복 등록 방지
-    const eventKey = `${root}_${eventType}`;
-    if (registeredEvents.has(eventKey)) return;
-    registeredEvents.add(eventKey);
-    
     // 이벤트 위임 리스너 등록
     root.addEventListener(eventType, (e) => {
       let currentElement = e.target;
