@@ -49,7 +49,7 @@ export function createElement(vNode) {
     throw new Error('함수 컴포넌트는 normalizeVNode로 먼저 변환해야 합니다.');
   }
   
-  // 5. 일반 vNode - 기존 함수 활용
+  // 5. 일반 vNode
   if (vNode && typeof vNode === 'object' && typeof vNode.type === 'string') {
     const $el = document.createElement(vNode.type);
     
